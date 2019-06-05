@@ -19,6 +19,12 @@ class ApplicationController < Sinatra::Base
       erb :new
     end
 
+    delete "/artists/:id" do
+      @artist = Artist.find_by(id: params[:id])
+      @artist.destroy
+      redirect to "/artists"
+    end
+
     post "/artists" do
       @artist = Artist.create(params)
       redirect to "/artists/#{@artist.id}"
@@ -29,5 +35,8 @@ class ApplicationController < Sinatra::Base
       erb :show
     end
 
-
+    get "/artists/:id/edit" do
+      @artist = Artist.find(params[:id])
+    erb :edit
+    end
 end
